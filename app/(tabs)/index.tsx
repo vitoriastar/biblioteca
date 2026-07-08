@@ -1,98 +1,224 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+const GREEN = "#00843D";
+const DARK_GREEN = "#006B32";
+const LIGHT_GREEN = "#EAF7EF";
 
-export default function HomeScreen() {
+export default function App() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <View style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.logo}>IFMA</Text>
+            <Text style={styles.title}>Biblioteca IFMA</Text>
+            <Text style={styles.subtitle}>Seu conhecimento começa aqui</Text>
+          </View>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+          <View style={styles.notification}>
+            <Text style={styles.notificationIcon}>🔔</Text>
+          </View>
+        </View>
+
+        <View style={styles.searchBox}>
+          <Text style={styles.searchIcon}>🔍</Text>
+          <Text style={styles.searchText}>
+            Pesquisar livros, autores, temas...
+          </Text>
+        </View>
+
+        <View style={styles.banner}>
+          <View>
+            <Text style={styles.bannerTitle}>Explore nossa biblioteca</Text>
+            <Text style={styles.bannerSubtitle}>
+              Milhares de títulos disponíveis para você!
+            </Text>
+
+            <TouchableOpacity style={styles.bannerButton}>
+              <Text style={styles.bannerButtonText}>Ver acervo</Text>
+            </TouchableOpacity>
+          </View>
+
+          <Image
+            source={{
+              uri: "https://cdn-icons-png.flaticon.com/512/2232/2232688.png",
+            }}
+            style={styles.bannerImage}
+          />
+        </View>
+
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Livros em destaque</Text>
+          <Text style={styles.seeAll}>Ver todos</Text>
+        </View>
+
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <Text style={[styles.category, styles.categoryActive]}>Todos</Text>
+          <Text style={styles.category}>Tecnologia</Text>
+          <Text style={styles.category}>Educação</Text>
+          <Text style={styles.category}>Ciências</Text>
+          <Text style={styles.category}>Gestão</Text>
+        </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+    padding: 20,
   },
-  stepContainer: {
-    gap: 8,
+
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 40,
+    marginBottom: 24,
+  },
+
+  logo: {
+    fontSize: 22,
+    fontWeight: "900",
+    color: DARK_GREEN,
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+
+  title: {
+    fontSize: 30,
+    fontWeight: "900",
+    color: GREEN,
+  },
+
+  subtitle: {
+    fontSize: 16,
+    color: "#666666",
+    marginTop: 5,
+  },
+
+  notification: {
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    backgroundColor: GREEN,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  notificationIcon: {
+    fontSize: 22,
+  },
+
+  searchBox: {
+    height: 58,
+    borderWidth: 1.5,
+    borderColor: GREEN,
+    borderRadius: 30,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 18,
+    marginBottom: 26,
+  },
+
+  searchIcon: {
+    fontSize: 22,
+    marginRight: 10,
+  },
+
+  searchText: {
+    fontSize: 16,
+    color: "#888888",
+  },
+
+  banner: {
+    backgroundColor: GREEN,
+    borderRadius: 18,
+    padding: 20,
+    minHeight: 180,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 28,
+  },
+
+  bannerTitle: {
+    color: "#FFFFFF",
+    fontSize: 25,
+    fontWeight: "900",
+    width: 190,
+  },
+
+  bannerSubtitle: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    marginTop: 12,
+    width: 180,
+    lineHeight: 23,
+  },
+
+  bannerButton: {
+    backgroundColor: "#FFFFFF",
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 10,
+    alignSelf: "flex-start",
+    marginTop: 18,
+  },
+
+  bannerButtonText: {
+    color: GREEN,
+    fontSize: 15,
+    fontWeight: "800",
+  },
+
+  bannerImage: {
+    width: 110,
+    height: 110,
+    resizeMode: "contain",
+  },
+
+  sectionHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: "900",
+    color: "#111111",
+  },
+
+  seeAll: {
+    color: GREEN,
+    fontSize: 16,
+    fontWeight: "800",
+  },
+
+  category: {
+    backgroundColor: "#EFEFEF",
+    color: "#555555",
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 22,
+    fontSize: 15,
+    fontWeight: "600",
+    marginRight: 10,
+    marginBottom: 18,
+  },
+
+  categoryActive: {
+    backgroundColor: GREEN,
+    color: "#FFFFFF",
   },
 });
